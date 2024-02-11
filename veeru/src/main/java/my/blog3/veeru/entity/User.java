@@ -3,6 +3,8 @@ package my.blog3.veeru.entity;
 import javax.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -21,6 +23,12 @@ public class User {
     private String username;
     private String email;
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+
+    private Set<Role> roles;
 
 
 }
